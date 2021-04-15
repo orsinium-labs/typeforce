@@ -1,0 +1,23 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "typeforce"
+license = "MIT"
+author = "Gram"
+author-email = "gram@orsinium.dev"
+home-page = "https://github.com/orsinium-labs/typeforce"
+description-file = "README.md"
+requires-python = ">=3.6"
+keywords = "mypy,typing"
+
+classifiers=[
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Plugins",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Quality Assurance",
+]
