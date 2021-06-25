@@ -88,7 +88,7 @@ class Explorer(typing.NamedTuple):
                 continue
             yield Module(path=mpath, exe=self.exe, dry=self.dry)
 
-    def run(self):
+    def run(self) -> typing.Iterable[str]:
         for module in self.modules:
             status = module.process()
             yield TEMPLATE.format(
