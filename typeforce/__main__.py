@@ -1,3 +1,3 @@
-from ._core import entrypoint
+from ._cli import entrypoint
 
 entrypoint()
