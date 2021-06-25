@@ -71,4 +71,19 @@ STUBS = MappingProxyType({
     'ujson': 'types-ujson',
     'waitress': 'types-waitress',
     'yaml': 'types-PyYAML',
+
+    # https://github.com/typeddjango/awesome-python-typing/#stub-packages
+    'boto3': 'boto3-stubs',
+    'django': 'django-stubs',
+    'djangorestframework': 'djangorestframework-stubs',
+    'grpc': 'grpc-stubs',
+    'lxml': 'lxml-stubs',
+    'matplotlib': 'data-science-types',
+    'numpy': 'data-science-types',
+    'ordered_set': 'ordered-set-stubs',
+    'pandas': 'data-science-types',
+    'pyqt5': 'PyQt5-stubs',
+    'pyspark': 'pyspark-stubs',
+    'pythonista': 'pythonista-stubs',
+    'sqlalchemy': 'sqlalchemy-stubs',
 })

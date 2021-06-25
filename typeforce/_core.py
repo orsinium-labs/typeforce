@@ -52,7 +52,7 @@ class Module(typing.NamedTuple):
         if self.stubbed:
             return GREEN + 'already has stubs' + END
 
-        stub = STUBS.get(self.path.name)
+        stub = STUBS.get(self.path.name.lower())
         if stub:
             if not self.dry:
                 cmd = [self.exe, '-m', 'pip', 'install', stub]
