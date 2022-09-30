@@ -12,17 +12,7 @@ END = '\033[0m'
 
 MARKER = 'py.typed'
 TEMPLATE = '{name:30} {status}'
-SCRIPT = """
-import sys
-import {name} as module
-
-for name in dir(module):
-    obj = getattr(module, name)
-    ann = getattr(obj, '__annotations__', None)
-    if ann:
-        sys.exit(21)
-sys.exit(22)
-"""
+ROOT = Path(__file__).parent
 
 
 class Module(typing.NamedTuple):
@@ -36,12 +26,16 @@ class Module(typing.NamedTuple):
 
     @property
     def stubbed(self) -> bool:
+        if self.path.name.endswith('-stubs'):
+            return True
         new_name = self.path.name + '-stubs'
         return (self.path.parent / new_name).exists()
 
     @property
     def annotated(self) -> bool:
-        script = SCRIPT.format(name=self.path.name)
+        script_path = ROOT / '_script_inspect.py'
+        script = script_path.read_text()
+        script = script.replace('MODULE_NAME', self.path.name)
         result = subprocess.run([self.exe, '-c', script])
         assert result.returncode in (21, 22)
         return result.returncode == 21
@@ -74,10 +68,17 @@ class Explorer(typing.NamedTuple):
 
     @property
     def root(self) -> Path:
-        cmd = [self.exe, '-c', 'print(__import__("site").USER_SITE)']
+        script_path = ROOT / '_script_sites.py'
+        cmd = [self.exe, str(script_path)]
         result = subprocess.run(cmd, check=True, stdout=subprocess.PIPE)
-        path = result.stdout.decode().strip()
-        return Path(path)
+        sites = result.stdout.decode().strip().splitlines()
+        print(sites)
+        for site in sites:
+            path = Path(site)
+            if path.exists():
+                print(path)
+                return path
+        raise LookupError('cannot find site packages directory')
 
     @property
     def modules(self) -> typing.Iterable[Module]:
