@@ -26,6 +26,8 @@ class Module(typing.NamedTuple):
 
     @property
     def stubbed(self) -> bool:
+        if self.path.name.endswith('-stubs'):
+            return True
         new_name = self.path.name + '-stubs'
         return (self.path.parent / new_name).exists()
 
